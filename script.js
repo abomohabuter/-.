@@ -1,23 +1,48 @@
-// المتغيرات الأساسية للمؤقت
 let timer;
-let timeLeft = 25 * 60; // 25 دقيقة بالثواني
+let timeLeft = 25 * 60; 
 let isRunning = false;
+let currentMode = 25; // الوضع الافتراضي دقائق
 
 const timerDisplay = document.getElementById('timer');
 const startBtn = document.getElementById('start-btn');
 const pauseBtn = document.getElementById('pause-btn');
 const resetBtn = document.getElementById('reset-btn');
 
-// تحديث واجهة العداد
+const preset25 = document.getElementById('preset-25');
+const preset50 = document.getElementById('preset-50');
+
+// عناصر الإحصائيات
+const completedCountEl = document.getElementById('completed-count');
+const progressPercentEl = document.getElementById('progress-percent');
+const taskList = document.getElementById('task-list');
+const taskInput = document.getElementById('task-input');
+const addBtn = document.getElementById('add-btn');
+
+// تحديث الواجهة الرقمية للعداد
 function updateDisplay() {
     let minutes = Math.floor(timeLeft / 60);
     let seconds = timeLeft % 60;
     
-    // إضافة صفر على اليسار إذا كان الرقم أقل من 10
     minutes = minutes < 10 ? '0' + minutes : minutes;
     seconds = seconds < 10 ? '0' + seconds : seconds;
     
     timerDisplay.textContent = `${minutes}:${seconds}`;
+}
+
+// التبديل بين أوضاع التحكم بالوقت (25 دقيقة أو 50 دقيقة)
+preset25.addEventListener('click', () => switchMode(25, preset25));
+preset50.addEventListener('click', () => switchMode(50, preset50));
+
+function switchMode(minutes, button) {
+    clearInterval(timer);
+    isRunning = false;
+    currentMode = minutes;
+    timeLeft = minutes * 60;
+    updateDisplay();
+    
+    // تحديث شكل الأزرار النشطة
+    document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
 }
 
 // تشغيل العداد
@@ -30,8 +55,8 @@ startBtn.addEventListener('click', () => {
                 updateDisplay();
             } else {
                 clearInterval(timer);
-                alert("انتهى وقت التركيز! خذ استراحة قصيرة.");
-                timeLeft = 25 * 60;
+                alert(currentMode === 50 ? "انتهت الـ 50 دقيقة بنجاح! استرح الآن لمدة 10 دقائق." : "انتهت جلسة البومودورو! خذ استراحة قصيرة.");
+                timeLeft = currentMode * 60;
                 isRunning = false;
                 updateDisplay();
             }
@@ -39,25 +64,35 @@ startBtn.addEventListener('click', () => {
     }
 });
 
-// إيقاف مؤقت
 pauseBtn.addEventListener('click', () => {
     clearInterval(timer);
     isRunning = false;
 });
 
-// إعادة تعيين العداد
 resetBtn.addEventListener('click', () => {
     clearInterval(timer);
     isRunning = false;
-    timeLeft = 25 * 60;
+    timeLeft = currentMode * 60;
     updateDisplay();
 });
 
 // ---------------------------------------------------
-// منطق قائمة المهام (To-Do List)
-const taskInput = document.getElementById('task-input');
-const addBtn = document.getElementById('add-btn');
-const taskList = document.getElementById('task-list');
+// حساب وتحديث نسب الإنجاز والمهام
+function updateStats() {
+    const totalTasks = taskList.children.length;
+    const completedTasks = taskList.querySelectorAll('.completed').length;
+    
+    // تحديث كمية الإنجاز اليومي
+    completedCountEl.textContent = completedTasks;
+    
+    // تحديث نسبة الإنجاز
+    if (totalTasks === 0) {
+        progressPercentEl.textContent = '0%';
+    } else {
+        const percentage = Math.round((completedTasks / totalTasks) * 100);
+        progressPercentEl.textContent = `${percentage}%`;
+    }
+}
 
 // إضافة مهمة جديدة
 addBtn.addEventListener('click', addTask);
@@ -67,18 +102,17 @@ taskInput.addEventListener('keypress', (e) => {
 
 function addTask() {
     const taskText = taskInput.value.trim();
-    if (taskText === '') return; // تجاهل إذا كان الحقل فارغاً
+    if (taskText === '') return;
 
     const li = document.createElement('li');
-    
-    // نص المهمة
     const span = document.createElement('span');
     span.textContent = taskText;
     li.appendChild(span);
 
-    // عند الضغط على المهمة يتم شطبها (اكتملت)
+    // تفعيل التغيير عند الضغط (اكتمال المهمة) وحساب النسبة
     span.addEventListener('click', () => {
         li.classList.toggle('completed');
+        updateStats();
     });
 
     // زر الحذف
@@ -87,10 +121,12 @@ function addTask() {
     deleteBtn.className = 'delete-btn';
     deleteBtn.addEventListener('click', () => {
         taskList.removeChild(li);
+        updateStats();
     });
 
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
     
-    taskInput.value = ''; // تفريغ الحقل
+    taskInput.value = ''; 
+    updateStats(); // تحديث الإحصائيات عند إضافة مهمة جديدة
 }
