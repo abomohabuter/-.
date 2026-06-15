@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منظم الوقت الذكي</title>
+    <title>منظم الوقت الذكي Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>⏱️ منظم الوقت والدراسة</h1>
+        <h1>⏱️ منظم الوقت والدراسة الإحترافي</h1>
         
+        <!-- لوحة الإحصائيات ونسب الإنجاز الجديدة -->
+        <div class="card stats-section">
+            <h2>📊 إحصائيات الإنجاز اليومي</h2>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span id="completed-count">0</span>
+                    <p>مهام أُنجزت اليوم</p>
+                </div>
+                <div class="stat-box">
+                    <span id="progress-percent">0%</span>
+                    <p>نسبة الإنجاز الإجمالية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم التحكم بالوقت والمؤقت المطور -->
         <div class="card timer-section">
-            <h2>مؤقت التركيز (بومودورو)</h2>
+            <h2>⚙️ لوحة التحكم بالوقت</h2>
+            <div class="timer-presets">
+                <button id="preset-25" class="preset-btn active">٢٥ دقيقة (بومودورو)</button>
+                <button id="preset-50" class="preset-btn">٥٠ دقيقة (تركيز عميق)</button>
+            </div>
             <div id="timer">25:00</div>
             <div class="controls">
                 <button id="start-btn">بدء</button>
@@ -20,14 +40,27 @@
             </div>
         </div>
 
+        <!-- قسم قائمة المهام -->
         <div class="card todo-section">
-            <h2>📝 مهامي اليومية</h2>
+            <h2>📝 مهامي الدراسية</h2>
             <div class="input-group">
                 <input type="text" id="task-input" placeholder="أضف مهمة جديدة للدراسة...">
                 <button id="add-btn">إضافة</button>
             </div>
             <ul id="task-list">
-                </ul>
+                <!-- المهام تظهر هنا -->
+            </ul>
+        </div>
+
+        <!-- قسم نصائح الدراسة والتركيز -->
+        <div class="card tips-section">
+            <h2>💡 نصائح ذهبية للدراسة والتركيز</h2>
+            <ul class="tips-list">
+                <li>🎯 <strong>قاعدة الـ 50/10:</strong> جرب الدراسة لمدة 50 دقيقة بتركيز كامل، ثم خذ استراحة لمدة 10 دقائق لتجديد طاقة عقلك بدون شاشات!</li>
+                <li>📱 <strong>أبعد المشتتات:</strong> ضع هاتفك في غرفة أخرى أو على وضع الطيران أثناء وقت التركيز.</li>
+                <li>💧 <strong>الترطيب المستمر:</strong> شرب الماء أثناء الدراسة يحسن تدفق الدم للدماغ ويزيد التركيز.</li>
+                <li>🎒 <strong>تفكيك المهام:</strong> قسّم المادة الكبيرة إلى أجزاء صغيرة جداً لتسهيل إنجازها وشطبها من القائمة.</li>
+            </ul>
         </div>
     </div>
 
