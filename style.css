@@ -1,4 +1,4 @@
-/* تنسيقات عامة للموقع بألوان هادئة */
+/* تنسيقات الألوان الهادئة والوضع الداكن */
 * {
     margin: 0;
     padding: 0;
@@ -7,55 +7,103 @@
 }
 
 body {
-    background-color: #121212; /* أسود هادئ للملفية */
-    color: #e0e0e0; /* أبيض مائل للرمادي ناعم للنصوص */
+    background-color: #121212; 
+    color: #e0e0e0; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    padding: 20px;
+    padding: 40px 20px;
 }
 
 .container {
     width: 100%;
-    max-width: 500px;
+    max-width: 550px;
     text-align: center;
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     margin-bottom: 25px;
     color: #ffffff;
     font-weight: 600;
 }
 
-/* بطاقات التقسيم */
 .card {
-    background-color: #1e1e1e; /* رمادي غامق جداً للبطاقات */
-    border: 1px solid #2d2d2d; /* تحديد ناعم */
+    background-color: #1e1e1e; 
+    border: 1px solid #2d2d2d; 
     border-radius: 16px;
     padding: 25px;
     margin-bottom: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-2px); /* حركة خفيفة عند تمرير الماوس */
+    text-align: right; /* محاذاة النصوص لليمين للغة العربية */
 }
 
 h2 {
-    font-size: 1.25rem;
-    margin-bottom: 15px;
+    font-size: 1.15rem;
+    margin-bottom: 20px;
     color: #b3b3b3;
+    border-bottom: 1px solid #2d2d2d;
+    padding-bottom: 10px;
 }
 
-/* قسم المؤقت */
+/* شبكة الإحصائيات الجديدة */
+.stats-grid {
+    display: flex;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.stat-box {
+    flex: 1;
+    background-color: #252525;
+    border: 1px solid #333333;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-box span {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat-box p {
+    font-size: 0.85rem;
+    color: #888888;
+}
+
+/* أزرار التحكم والتحويل بالوقت */
+.timer-presets {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    justify-content: center;
+}
+
+.preset-btn {
+    background-color: #2a2a2a;
+    color: #b3b3b3;
+    border: 1px solid #3d3d3d;
+    font-size: 0.85rem;
+    padding: 8px 14px;
+}
+
+.preset-btn.active {
+    background-color: #ffffff;
+    color: #121212;
+    border-color: #ffffff;
+}
+
 #timer {
     font-size: 3.5rem;
     font-weight: bold;
-    margin: 20px 0;
+    margin: 15px 0;
     color: #ffffff;
+    text-align: center;
     letter-spacing: 2px;
 }
 
@@ -65,10 +113,9 @@ h2 {
     gap: 10px;
 }
 
-/* الأزرار بتصميم أبيض وأسود متناسق */
 button {
-    background-color: #ffffff; /* زر أبيض */
-    color: #121212; /* نص أسود */
+    background-color: #ffffff; 
+    color: #121212; 
     border: none;
     padding: 10px 18px;
     font-size: 0.95rem;
@@ -80,7 +127,7 @@ button {
 
 button:hover {
     background-color: #e0e0e0;
-    transform: scale(1.03);
+    transform: scale(1.02);
 }
 
 #pause-btn {
@@ -89,21 +136,12 @@ button:hover {
     border: 1px solid #404040;
 }
 
-#pause-btn:hover {
-    background-color: #2d2d2d;
-    color: #ffffff;
-}
-
 #reset-btn {
     background-color: transparent;
     color: #888888;
 }
 
-#reset-btn:hover {
-    color: #ffffff;
-}
-
-/* قسم قائمة المهام */
+/* قائمة المهام */
 .input-group {
     display: flex;
     gap: 10px;
@@ -119,18 +157,10 @@ input[type="text"] {
     border-radius: 8px;
     font-size: 0.95rem;
     outline: none;
-    transition: border-color 0.2s;
-}
-
-input[type="text"]:focus {
-    border-color: #ffffff; /* يضيء بالأبيض عند الكتابة */
 }
 
 #task-list {
     list-style: none;
-    text-align: right;
-    max-height: 200px;
-    overflow-y: auto;
 }
 
 #task-list li {
@@ -141,8 +171,7 @@ input[type="text"]:focus {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-right: 4px solid #ffffff; /* علامة بيضاء مميزة للمهمة */
-    animation: fadeIn 0.3s ease;
+    border-right: 4px solid #ffffff;
 }
 
 #task-list li.completed {
@@ -159,11 +188,28 @@ input[type="text"]:focus {
 }
 
 .delete-btn:hover {
-    background-color: #333333;
-    color: #ff6b6b; /* أحمر خفيف جداً للحذف عند الـ هوفر فقط */
+    color: #ff6b6b;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+/* قسم النصائح */
+.tips-list {
+    list-style: none;
+    padding-right: 15px;
+}
+
+.tips-list li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    position: relative;
+    color: #b3b3b3;
+}
+
+.tips-list li::before {
+    content: "•";
+    color: #ffffff;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-right: -1em;
 }
