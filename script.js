@@ -1,7 +1,7 @@
 let timer;
 let timeLeft = 25 * 60; 
 let isRunning = false;
-let currentMode = 25; // الوضع الافتراضي دقائق
+let currentMode = 25; 
 
 const timerDisplay = document.getElementById('timer');
 const startBtn = document.getElementById('start-btn');
@@ -29,7 +29,7 @@ function updateDisplay() {
     timerDisplay.textContent = `${minutes}:${seconds}`;
 }
 
-// التبديل بين أوضاع التحكم بالوقت (25 دقيقة أو 50 دقيقة)
+// التبديل بين أوضاع التحكم بالوقت
 preset25.addEventListener('click', () => switchMode(25, preset25));
 preset50.addEventListener('click', () => switchMode(50, preset50));
 
@@ -40,7 +40,6 @@ function switchMode(minutes, button) {
     timeLeft = minutes * 60;
     updateDisplay();
     
-    // تحديث شكل الأزرار النشطة
     document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 }
@@ -82,10 +81,8 @@ function updateStats() {
     const totalTasks = taskList.children.length;
     const completedTasks = taskList.querySelectorAll('.completed').length;
     
-    // تحديث كمية الإنجاز اليومي
     completedCountEl.textContent = completedTasks;
     
-    // تحديث نسبة الإنجاز
     if (totalTasks === 0) {
         progressPercentEl.textContent = '0%';
     } else {
@@ -105,28 +102,58 @@ function addTask() {
     if (taskText === '') return;
 
     const li = document.createElement('li');
+    
+    // نص المهمة
     const span = document.createElement('span');
     span.textContent = taskText;
     li.appendChild(span);
 
-    // تفعيل التغيير عند الضغط (اكتمال المهمة) وحساب النسبة
-    span.addEventListener('click', () => {
+    // حاوية الأزرار (إنجاز + حذف) عشان تطلع بجنب بعض
+    const btnGroup = document.createElement('div');
+    btnGroup.style.display = 'flex';
+    btnGroup.style.gap = '5px';
+
+    // 1. زر تم الإنجاز الجديد ✅
+    const completeBtn = document.createElement('button');
+    completeBtn.textContent = 'إنجاز';
+    completeBtn.style.padding = '4px 10px';
+    completeBtn.style.fontSize = '0.8rem';
+    completeBtn.style.backgroundColor = '#2d2d2d';
+    completeBtn.style.color = '#ffffff';
+    completeBtn.style.border = '1px solid #444';
+    
+    completeBtn.addEventListener('click', () => {
         li.classList.toggle('completed');
+        if(li.classList.contains('completed')) {
+            completeBtn.textContent = 'تراجع';
+            completeBtn.style.backgroundColor = '#ffffff';
+            completeBtn.style.color = '#121212';
+        } else {
+            completeBtn.textContent = 'إنجاز';
+            completeBtn.style.backgroundColor = '#2d2d2d';
+            completeBtn.style.color = '#ffffff';
+        }
         updateStats();
     });
 
-    // زر الحذف
+    // 2. زر الحذف ❌
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'حذف';
     deleteBtn.className = 'delete-btn';
+    deleteBtn.style.padding = '4px 10px';
+    deleteBtn.style.fontSize = '0.8rem';
+    
     deleteBtn.addEventListener('click', () => {
         taskList.removeChild(li);
         updateStats();
     });
 
-    li.appendChild(deleteBtn);
+    // تركيب العناصر
+    btnGroup.appendChild(completeBtn);
+    btnGroup.appendChild(deleteBtn);
+    li.appendChild(btnGroup);
     taskList.appendChild(li);
     
     taskInput.value = ''; 
-    updateStats(); // تحديث الإحصائيات عند إضافة مهمة جديدة
+    updateStats(); 
 }
