@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظم الوقت الذكي</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>⏱️ منظم الوقت والدراسة</h1>
+        
+        <div class="card timer-section">
+            <h2>مؤقت التركيز (بومودورو)</h2>
+            <div id="timer">25:00</div>
+            <div class="controls">
+                <button id="start-btn">بدء</button>
+                <button id="pause-btn">إيقاف مؤقت</button>
+                <button id="reset-btn">إعادة تعيين</button>
+            </div>
+        </div>
+
+        <div class="card todo-section">
+            <h2>📝 مهامي اليومية</h2>
+            <div class="input-group">
+                <input type="text" id="task-input" placeholder="أضف مهمة جديدة للدراسة...">
+                <button id="add-btn">إضافة</button>
+            </div>
+            <ul id="task-list">
+                </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
